@@ -156,11 +156,11 @@
 	right: 20px;
 	transition: 0.5s;
 	z-index: 1;
-	padding: 1.30rem 1.875rem;
+	padding: 1.25rem 1.875rem;
 	opacity: 0;
 	text-align: center;
 	color: #39084b;
-	height: 10px;
+	height: 60px;
 }
 
 .card-popup-bx::before {
