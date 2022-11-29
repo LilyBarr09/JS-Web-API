@@ -85,15 +85,100 @@
 
 .header-div {
 	display: flex;
+	justify-content: space-between;
 }
 
 .header-div .img-wrapper {
-	width: 100%;
-	border-radius: 8px;
 	object-fit: cover;
-	/* height: 100px; */
+	height: 200px;
+	width: 200px;
+	text-align: center;
+	box-shadow: 0 22px 34px rgb(22 28 45 / 18%);
+	border-radius: 50%;
 }
 
 .img-wrapper img {
-	width: 100px;
+	width: 100%;
+	border-radius: 50%;
+}
+
+.header-txt h1 {
+	text-shadow: 2px 2px 5px #3a3e47;
+}
+
+.navbar-nav {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.navbar-nav .nav {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+	cursor: pointer;
+}
+
+.desserts-grid {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 20px;
+}
+
+.dessert-card {
+	box-shadow: 0 0 20px rgb(179, 165, 199);
+	position: relative;
+	width: 340px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	border: 1px solid transparent;
+	margin: 10px;
+	padding: 20px 10px;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: all .35s ease-in;
+}
+
+.dessert-card .card-img {
+	width: 250px;
+}
+
+.card-img img {
+	width: 100%;
+	height: 300px;
+}
+
+.card-popup-bx {
+	position: absolute;
+	bottom: 0;
+	left: 20px;
+	right: 20px;
+	transition: 0.5s;
+	z-index: 1;
+	padding: 1.30rem 1.875rem;
+	opacity: 0;
+	text-align: center;
+	color: #39084b;
+	height: 10px;
+}
+
+.card-popup-bx::before {
+	position: absolute;
+	content: "";
+	background: #bd97cb;
+	border: 1px solid #5e376d;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: -1;
+	opacity: 0.9;
+	border-radius: 8px;
+}
+
+.dessert-card:hover .card-popup-bx {
+	bottom: 20px;
+	opacity: 1;
+	cursor: pointer;
 }

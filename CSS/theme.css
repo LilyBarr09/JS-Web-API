@@ -1,9 +1,9 @@
 :root {
 	--bg: #fff;
 	--bg-panel: #fff;
-	--color-headings: #151c2d;
+	--color-headings: #3a3e47;
 	--color-text-opacity: rgba(22, 28, 45, 0.7);
-	--color-text: #161c2d;
+	--color-text: #3a3e47;
 	--color-text-base: #161c2d;
 	--border: #383f53;
 }

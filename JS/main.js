@@ -40,20 +40,22 @@ console.log(desserts);
 console.log(desserts[0].name);
 console.log(desserts[0].category);
 console.log(desserts[0].photoUrl);
+console.log(desserts[0].description);
 
-const createDessertCards = ({ name, category, image }) => {
+
+const createDessertCards = ({ name, category, photoUrl }) => {
   const dessertCard = document.createElement("div");
 
   dessertCard.classList.add("dessert-card");
   dessertCard.innerHTML += `
 	<div class="card-img">
-		<img src="${image}" alt="dessert icon">
+		<img src="${photoUrl}" alt="dessert icon">
 	</div>
 
 	<h4>${name}</h4>
 	<p>${category}</p>
 
-	<div>Click to find out more!</div>
+	<div class="card-popup-bx">Click to find out more!</div>
 		
 	</div>
 `;
