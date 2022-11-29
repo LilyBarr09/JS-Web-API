@@ -83,3 +83,17 @@
 	transform: scaleX(-1);
 }
 
+.header-div {
+	display: flex;
+}
+
+.header-div .img-wrapper {
+	width: 100%;
+	border-radius: 8px;
+	object-fit: cover;
+	/* height: 100px; */
+}
+
+.img-wrapper img {
+	width: 100px;
+}

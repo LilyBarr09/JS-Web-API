@@ -58,6 +58,7 @@ p {margin-top: 0;}
 }
 
 .container {max-width: 1140px;}
+.container-fluid {	background: #ece3f0;}
 
 .ul-defaults-none {
 	list-style: none;
