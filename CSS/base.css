@@ -1,0 +1,35 @@
+section,
+footer,
+header,
+main,
+nav {
+	display: block;
+}
+
+/* div defaults */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* body defaults */
+body {
+	margin: 0;
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-text);
+	background-color: var(--bg);
+	text-align: left;
+}
+
+/* anchor tags defaults */
+a {
+	color: #495fef; /*a lighter color for hyperlinks */
+	text-decoration: none;
+	background-color: transparent;
+}
+
+/* header tags defaults */
