@@ -140,6 +140,12 @@
 	transition: all .35s ease-in;
 }
 
+.dessert-card:hover{
+	bottom: 20px;
+	opacity: 1;
+	cursor: pointer;
+}
+
 .dessert-card .card-img {
 	width: 250px;
 }
@@ -182,3 +188,4 @@
 	opacity: 1;
 	cursor: pointer;
 }
+
