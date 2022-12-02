@@ -68,3 +68,4 @@ const createDessertCards = ({ name, category, photoUrl }) => {
 desserts.forEach((card) => {
   createDessertCards(card);
 });
+

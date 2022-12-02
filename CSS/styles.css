@@ -141,9 +141,10 @@
 }
 
 .dessert-card:hover{
-	bottom: 20px;
-	opacity: 1;
 	cursor: pointer;
+	box-shadow: 0 0 20px rgb(90, 9, 143);
+	opacity: 1;
+
 }
 
 .dessert-card .card-img {
@@ -189,3 +190,60 @@
 	cursor: pointer;
 }
 
+.modal {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 1rem;
+	transition: all 0.35s ease-in;
+	/* visibility: hidden; */
+	/* opacity: 0;
+	z-index: 99; */
+}
+
+.popup-dessert {
+	max-width: 800px;
+	max-height: 80vh;
+	margin: auto;
+	background: #A58CB3;
+	color: var(--color-text-base);
+	overflow: hidden;
+	padding: 1.25rem 1.85rem;
+	border-radius: 5px;
+	cursor: default
+}
+
+.popup-title-bx {
+	display: flex;
+	justify-content: space-around;
+}
+
+.popup-title-bx h3 {
+	width: 200px;
+	padding-bottom: 1rem;
+	font-weight: 700;
+}
+
+.popup-title-bx h3, i {
+font-size: 1.5rem;
+}
+
+.popup-description {
+	text-align: justify;
+}
+
+.popup-container-btn {
+	display: flex;
+	justify-content: center;
+}
+
+.popup-container-btn button {
+	margin: 1rem;
+	box-shadow: 5px 10px 20px #a0e7e5;
+}
+
+.square-btn {
+	border-radius: 8px;
+}
