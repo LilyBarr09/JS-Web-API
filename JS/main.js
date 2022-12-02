@@ -1,24 +1,3 @@
-// Promise // the data we will eventually get back from the URL when the request is complete
-// .all([cookies, donuts, iceCream])
-// .then((response) =>
-// Promise.all(response.map((res) => res.json()))
-// .then((data) => console.log(data))) // we can access and manipulate this data once it loads by subsequently calling then() - to perform multiple operations we can keep chaining to then() making sure we always pass in our data as an argument, and return a value.  place data in a desserts variable
-// .catch(err => {
-// 	console.error(err);
-// });
-
-// const getData = async () => {
-// 	const cookies = fetch('https://freerandomapi.cyclic.app/api/v1/desserts?category=Cookie&limit=10');
-// 	const donuts = fetch('https://freerandomapi.cyclic.app/api/v1/desserts?category=Donut&limit=10');
-// 	const iceCream = fetch('https://freerandomapi.cyclic.app/api/v1/desserts?category=Ice_Cream&limit=10');
-// 	const res = await Promise.all([cookies, donuts, iceCream]);
-// 	const getPromises = res.map(r => r.json());
-// 	const [cookies1, donuts1, iceCream1] = await Promise.all(getPromises);
-// 	console.log(cookies1, donuts1, iceCream1);
-// };
-
-// getData();
-
 const myData = async (names) => {
   const promises = names.map((name) =>
     fetch(
@@ -102,3 +81,70 @@ const createPopupDesserts = ({name, photoUrl, description}) => {
 desserts.forEach((card) => {
   createPopupDesserts(card);
 });
+
+const theme = 'theme';
+const dataTheme = 'data-theme';
+const themeTab = '.theme-tab';
+const switcherBtn = '.switcher-btn';
+const dark = 'dark';
+const light = 'light';
+const open = 'open';
+const active = 'active';
+
+
+const root = document.documentElement;
+
+// THEME - LIGHT/DARK JS:
+const toggleTheme = document.querySelector(themeTab);
+const switcher = document.querySelector(switcherBtn);
+const currentTheme = localStorage.getItem(theme);
+
+const setActive = (elm, selector) => {
+  if(document.querySelector(`${selector}.${active}`) !== null) {
+    document.querySelector(`${selector}.${active}`).classList.remove(active);
+  }
+  elm.classList.add(active);
+};
+
+const setTheme = (val) => {
+  if(val === dark) {
+    root.setAttribute(dataTheme, dark);
+    localStorage.setItem(theme, dark);
+  }
+  else {
+    root.setAttribute(dataTheme, light);
+    localStorage.setItem(theme, light);
+  }
+};
+
+if(currentTheme === dark) {
+  root.setAttribute(dataTheme, currentTheme);
+  switcher.forEach((btn) => {
+    btn.classList.remove(active);
+  });
+
+  if(currentTheme === dark) {
+    switcher[1].classList.add(active);
+  }
+  else {
+    switcher[0].classList.add(active);
+  }
+};
+
+toggleTheme.addEventListener('click', function () {
+	const tab = this.parentElement.parentElement;
+	if (!tab.className.includes(open)) {
+		tab.classList.add(open); // open is our css class we're including
+	}
+	else {
+		tab.classList.remove(open);
+	}
+});
+
+for (const elm of switcher) {
+	elm.addEventListener('click', function () {
+		const toggle = this.dataset.toggle;
+		setActive(elm, switcherBtn);
+		setTheme(toggle);
+	})
+};
