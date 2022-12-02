@@ -69,3 +69,36 @@ desserts.forEach((card) => {
   createDessertCards(card);
 });
 
+const createPopupDesserts = ({name, photoUrl, description}) => {
+  const popupDessert = document.createElement("div");
+
+  popupDessert.classList.add("popup-dessert");
+  popupDessert.innerHTML += `
+    <div class="popup-title-bx">
+      <h3>${name}</h3>
+      <i class="fas fa-times"></i>
+    </div>
+
+    <div class="popup-img">
+      <img src="${photoUrl}" alt="dessert picture">
+    </div>
+
+    <div class="popup-description">
+      <p>${description}</p>
+    </div>
+
+    <div class="popup-container-btn">
+      <button class="btn btn-primary square-btn">Add To My Favorites</button>
+    </div>
+  </div>  
+    
+  `;
+
+  console.log(popupDessert);
+
+  document.querySelector(".site-wrapper").appendChild(popupDessert);
+};
+
+desserts.forEach((card) => {
+  createPopupDesserts(card);
+});
