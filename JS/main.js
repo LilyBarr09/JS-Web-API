@@ -96,7 +96,7 @@ const root = document.documentElement;
 
 // THEME - LIGHT/DARK JS:
 const toggleTheme = document.querySelector(themeTab);
-const switcher = document.querySelector(switcherBtn);
+const switcher = document.querySelectorAll(switcherBtn);
 const currentTheme = localStorage.getItem(theme);
 
 const setActive = (elm, selector) => {
