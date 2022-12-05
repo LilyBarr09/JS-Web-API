@@ -1,3 +1,4 @@
+// Getting Data:
 const myData = async (names) => {
   const promises = names.map((name) =>
     fetch(
@@ -16,16 +17,20 @@ const desserts = await myData([
 ]);
 
 console.log(desserts);
+console.log(desserts[0].id); // undefined
 console.log(desserts[0].name);
 console.log(desserts[0].category);
 console.log(desserts[0].photoUrl);
 console.log(desserts[0].description);
 
 
-const createDessertCards = ({ name, category, photoUrl }) => {
+// Creating Dessert Cards:
+const createDessertCards = ({ name, category, photoUrl}) => {
   const dessertCard = document.createElement("div");
 
   dessertCard.classList.add("dessert-card");
+  dessertCard.setAttribute(`data-item`, category);
+  dessertCard.setAttribute(`data-open`, name);
   dessertCard.innerHTML += `
 	<div class="card-img">
 		<img src="${photoUrl}" alt="dessert icon">
@@ -38,9 +43,7 @@ const createDessertCards = ({ name, category, photoUrl }) => {
 		
 	</div>
 `;
-
-  console.log(dessertCard);
-
+  // console.log(dessertCard);
   document.querySelector(".desserts-grid").appendChild(dessertCard);
 };
 
@@ -48,40 +51,50 @@ desserts.forEach((card) => {
   createDessertCards(card);
 });
 
-const createPopupDesserts = ({name, photoUrl, description}) => {
-  const popupDessert = document.createElement("div");
 
-  popupDessert.classList.add("popup-dessert");
-  popupDessert.innerHTML += `
-    <div class="popup-title-bx">
-      <h3>${name}</h3>
-      <i class="fas fa-times"></i>
-    </div>
 
-    <div class="popup-img">
-      <img src="${photoUrl}" alt="dessert picture">
-    </div>
 
-    <div class="popup-description">
-      <p>${description}</p>
-    </div>
 
-    <div class="popup-container-btn">
-      <button class="btn btn-primary square-btn">Add To My Favorites</button>
-    </div>
-  </div>  
-    
+// Creating Dessert Cards Modals:
+const createModalDesserts = ({name, photoUrl, description}) => {
+  
+  const modalDessert = document.createElement("div");
+  modalDessert.setAttribute('id', name);
+  modalDessert.classList.add("modal");
+  modalDessert.setAttribute('data-animation', 'slideInOutTop');
+  
+  modalDessert.innerHTML += `
+    <div class="modal-dialogue">
+      
+      <div class="modal-title-bx">
+        <h3>${name}</h3>
+        <i class="fas fa-times" data-close></i>
+      </div>
+
+      <div class="modal-img">
+        <img src="${photoUrl}" alt="dessert picture">
+      </div>
+
+      <div class="modal-description">
+        <p>${description}</p>
+      </div>
+
+      <div class="modal-container-btn">
+        <button class="btn btn-primary square-btn">Add To My Favorites</button>
+      </div>
+      
+    </div>    
   `;
-
-  console.log(popupDessert);
-
-  document.querySelector(".site-wrapper").appendChild(popupDessert);
+  console.log(modalDessert);
+  document.querySelector(".site-wrapper").appendChild(modalDessert);
 };
 
 desserts.forEach((card) => {
-  createPopupDesserts(card);
+  createModalDesserts(card);
 });
 
+
+// Setting Light-Dark Theme 
 const theme = 'theme';
 const dataTheme = 'data-theme';
 const themeTab = '.theme-tab';
@@ -90,6 +103,14 @@ const dark = 'dark';
 const light = 'light';
 const open = 'open';
 const active = 'active';
+
+//Attributes Applied To The Elements that will Trigger the Modal Open/Close
+const modalOpen = '[data-open]';
+const modalClose = '[data-close]';
+const isVisible = 'is-visible';
+
+// const dataFilter = '[data-filter]';
+const dessertData = '[data-item]';
 
 
 const root = document.documentElement;
@@ -148,3 +169,33 @@ for (const elm of switcher) {
 		setTheme(toggle);
 	})
 };
+
+
+
+// MODALS
+const openModal = document.querySelectorAll(modalOpen);
+const closeModal = document.querySelectorAll(modalClose);
+
+for(const elm of openModal) {
+  elm.addEventListener('click', function() {
+    const modalId = this.dataset.open;
+    document.getElementById(modalId).classList.add(isVisible);
+  })
+};
+
+for(const elm of closeModal) {
+  elm.addEventListener('click', function() {
+    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+  })
+};
+
+document.addEventListener('click', (e) => {
+ if(e.target === document.querySelector('.modal.is-visible'))
+ document.querySelector('.modal.is-visible').classList.remove(isVisible);
+});
+
+document.addEventListener('keyup', (e) => {
+  if(e.key === 'Escape')
+  document.querySelector('.modal.is-visible').classList.remove(isVisible);
+});
+
