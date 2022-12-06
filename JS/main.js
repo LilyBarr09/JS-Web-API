@@ -16,12 +16,11 @@ const desserts = await myData([
   "Ice_Cream&limit=10",
 ]);
 
-console.log(desserts);
-console.log(desserts[0].id); // undefined
-console.log(desserts[0].name);
-console.log(desserts[0].category);
-console.log(desserts[0].photoUrl);
-console.log(desserts[0].description);
+// console.log(desserts);
+// console.log(desserts[0].name);
+// console.log(desserts[0].category);
+// console.log(desserts[0].photoUrl);
+// console.log(desserts[0].description);
 
 
 // Creating Dessert Cards:
@@ -92,6 +91,43 @@ const createModalDesserts = ({name, photoUrl, description}) => {
 desserts.forEach((card) => {
   createModalDesserts(card);
 });
+
+// DESSERT TOTALS COUNT BOX 
+const cookieFilter = desserts.filter(dessert => dessert.category === "Cookie").length;
+console.log(cookieFilter);
+
+const donutFilter = desserts.filter(dessert => dessert.category === "Donut").length;
+console.log(donutFilter);
+
+const iceCreamFilter = desserts.filter(dessert => dessert.category === "Ice_Cream").length;
+console.log(iceCreamFilter);
+
+const dessertDataCounts = (cookie, donut, iceCream) => {
+  const dataCounts = document.createElement("div");
+
+  dataCounts.classList.add("data-box");
+  
+  dataCounts.innerHTML = `
+    <div>
+      <h3 class="header-md">Dessert Totals</h3>
+      <div class="count-flex-box">
+        <div class="header-sm">Cookies: ${cookie}</div>
+        <div class="header-sm">Donuts: ${donut}</div>
+        <div class="header-sm">Ice Cream: ${iceCream}</div>
+      </div>
+    </div>
+   
+  `;
+  console.log(dataCounts);
+  document.querySelector(".dessert-count").appendChild(dataCounts);
+
+};
+dessertDataCounts(cookieFilter, donutFilter, iceCreamFilter);
+
+
+
+
+
 
 
 // Setting Light-Dark Theme 

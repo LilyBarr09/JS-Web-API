@@ -282,6 +282,31 @@
 	border-radius: 20px;
 }
 
+.dessert-count {
+	width: 95%;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgb(0 0 0 / 25%);
+	cursor: pointer;
+	margin-bottom: 2rem;
+	text-align: center;
+}
+.dessert-count .data-box {
+	/* height: 150px;
+	margin-top: 25px;
+	border: solid black; */
+	/* box-shadow: 2px 2px 10px, #5e376d; */
+}
+
+.data-header .header-md {
+	text-shadow: 2px 2px 2px #3a3e47;
+}
+
+.count-flex-box {
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+}
+
 [data-animation="slideInOutTop"].modal-dialogue {
 	opacity: 0;
 	transition: 0.5s;
