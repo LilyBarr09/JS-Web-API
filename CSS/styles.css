@@ -118,6 +118,14 @@
 	cursor: pointer;
 }
 
+.btn-alt.active {
+	border: 5px solid #5e376d;
+}
+
+.btn-alt:hover {
+	border-bottom: 5px solid #5e376d;;
+}
+
 .desserts-grid {
 	display: flex;
 	flex-wrap: wrap;
@@ -289,12 +297,6 @@
 	cursor: pointer;
 	margin-bottom: 2rem;
 	text-align: center;
-}
-.dessert-count .data-box {
-	/* height: 150px;
-	margin-top: 25px;
-	border: solid black; */
-	/* box-shadow: 2px 2px 10px, #5e376d; */
 }
 
 .data-header .header-md {

@@ -125,11 +125,6 @@ const dessertDataCounts = (cookie, donut, iceCream) => {
 dessertDataCounts(cookieFilter, donutFilter, iceCreamFilter);
 
 
-
-
-
-
-
 // Setting Light-Dark Theme 
 const theme = 'theme';
 const dataTheme = 'data-theme';
@@ -145,9 +140,9 @@ const modalOpen = '[data-open]';
 const modalClose = '[data-close]';
 const isVisible = 'is-visible';
 
-// const dataFilter = '[data-filter]';
+//Dessert Cards Filter
+const dataFilter = '[data-filter]';
 const dessertData = '[data-item]';
-
 
 const root = document.documentElement;
 
@@ -234,4 +229,27 @@ document.addEventListener('keyup', (e) => {
   if(e.key === 'Escape')
   document.querySelector('.modal.is-visible').classList.remove(isVisible);
 });
+
+// Data Filters
+const filterLink = document.querySelectorAll(dataFilter);
+const dessertItems = document.querySelectorAll(dessertData);
+
+
+for (const link of filterLink) {
+  link.addEventListener('click', function () {
+    setActive(link, '.filter-link');
+    const filter = this.dataset.filter;
+    dessertItems.forEach((card) => {
+      if(filter === 'all') {
+        card.style.display = 'flex';
+      }
+      else if (card.dataset.item === filter) {
+        card.style.display = 'flex';
+      }
+      else {
+        card.style.display = 'none';
+      }
+    })
+  })
+};
 
