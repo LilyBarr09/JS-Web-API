@@ -50,10 +50,6 @@ desserts.forEach((card) => {
   createDessertCards(card);
 });
 
-
-
-
-
 // Creating Dessert Cards Modals:
 const createModalDesserts = ({name, photoUrl, description}) => {
   
@@ -201,8 +197,6 @@ for (const elm of switcher) {
 	})
 };
 
-
-
 // MODALS
 const openModal = document.querySelectorAll(modalOpen);
 const closeModal = document.querySelectorAll(modalClose);
@@ -252,4 +246,6 @@ for (const link of filterLink) {
     })
   })
 };
+
+// ADD - REMOVE FROM FAVORITES
 
