@@ -46,9 +46,9 @@ const createDessertCards = ({ name, category, photoUrl}) => {
   document.querySelector(".desserts-grid").appendChild(dessertCard);
 };
 
-desserts.forEach((card) => {
-  createDessertCards(card);
-});
+// desserts.forEach((card) => {
+//   createDessertCards(card);
+// });
 
 // Creating Dessert Cards Modals:
 const createModalDesserts = ({name, photoUrl, description}) => {
@@ -84,9 +84,14 @@ const createModalDesserts = ({name, photoUrl, description}) => {
   document.querySelector(".site-wrapper").appendChild(modalDessert);
 };
 
-desserts.forEach((card) => {
+const createAllCards = (allDesserts) => {
+  allDesserts.forEach((card) => {
+  createDessertCards(card);
   createModalDesserts(card);
 });
+};
+
+createAllCards(desserts);
 
 // DESSERT TOTALS COUNT BOX 
 const cookieFilter = desserts.filter(dessert => dessert.category === "Cookie").length;
@@ -248,4 +253,12 @@ for (const link of filterLink) {
 };
 
 // ADD - REMOVE FROM FAVORITES
+// get favorites from empty array
+const favorites = [];
+
+//add class 'fav' to each favorite
+favorites.forEach(function(favorite) {
+  document.getElementById(favorite).className = 'fave';
+});
+
 
