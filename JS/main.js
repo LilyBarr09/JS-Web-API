@@ -22,6 +22,9 @@ const desserts = await myData([
 // console.log(desserts[0].photoUrl);
 // console.log(desserts[0].description);
 
+// add favorite key:value pair to data set to false
+// then sort function
+
 
 // Creating Dessert Cards:
 const createDessertCards = ({ name, category, photoUrl}) => {
