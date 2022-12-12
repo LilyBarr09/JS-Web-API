@@ -57,7 +57,7 @@
           <li data-filter="Ice_Cream" class="filter-link btn-alt">ICE CREAM</li>
           <li data-filter="alpha" class="filter-link btn-alt">A - Z</li>
           <li data-filter="reverseAlpha" class="filter-link btn-alt">Z - A</li>
-          <li class="btn-alt">MY FAVORITES</li>
+          <li class="btn-alt favorites-link" data-open="favorites">MY FAVORITES</li>
         </ul>
       </nav>
 
@@ -71,9 +71,10 @@
 
       </section>
 
-      <section class="favorites-full-modal container is-visible" data-animation="zoomInOut">
+      <!-- FULL PAGE FAVORITES MODAL -->
+      <section id="favorites" class="favorites-full-modal container is-visible" data-animation="slideInOutTop">
 
-        <div class="header-div container">
+        <div class="header-div">
 
           <div class="img-wrapper">
             <img src="/photos/cookies.jpeg" alt="cookies">
@@ -81,7 +82,7 @@
 
           <div class="header-txt">
             <h1 class="header-lg">I Cannoli Be Happy With You!</h1>
-            <h3 class="header-md">My Favorites</h3>
+            <h3 class="header-sm">My Favorites</h3>
           </div>
 
           <div class="img-wrapper">
