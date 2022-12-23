@@ -330,20 +330,39 @@ closeFavoritesModal.addEventListener('click', () => {
 
 
 // MOVE FAVORITES FROM MAIN PAGE TO FAVORITES MODAL
-const moveToFavorites = () => {
-  desserts.splice()
-}
-
-
-
+// write two functions: 1. Remove/Add HTML from the DOM, use append 2. Splice from Desserts array and add to Favorites Array from the fetch data array 3. invoke both of these functions inside de add Event Listener function. 4. Ask Mike: how to access info outside async function
 
 // get a reference to the list of dessert cards:
 const cardsList = document.getElementsByClassName('square-btn'); // array of elements of all my buttons on modals
 
-// cardsList.forEach((card) => {
-//   card.addEventListener('click', )
-// })
-// write two functions: 1. Remove/Add HTML from the DOM, use append 2. Splice from Desserts array and add to Favorites Array from the fetch data array 3. invoke both of these functions inside de add Event Listener function. 4. Ask Mike: how to access info outside async function
+const moveToFavorites = () => {
+  favoriteDesserts = desserts.splice(0);
+  return favoriteDesserts;
+};
+
+const moveBackToMain = () => {
+  desserts = favoriteDesserts.splice(0);
+  return desserts;
+};
+
+cardsList.addEventListener('click', () => {
+  desserts.forEach((card) => {
+      moveToFavorites();
+    })
+    document.querySelector(".fav-container").appendChild(".dessert-card");
+  });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
