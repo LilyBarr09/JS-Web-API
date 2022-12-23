@@ -1,35 +1,63 @@
-// Getting Data:
+const favoriteDesserts = [];
+
+//  SORT DATA FUNCTION
+const exampleSort = (data) => {
+  return data.sort(function(a, b){
+    if(a.name < b.name) { return -1; }
+    if(a.name > b.name) { return 1; }
+    return 0;
+});
+};
+
+const reverseSort = (data) => {
+  return data.sort((a, b) => {
+    if(a.name < b.name) {return 1};
+    if(a.name > b.name) {return -1};
+    return 0;
+  })
+};
+
+
+
+// FETCH DATA:
 const myData = async (names) => {
+  // desserts is an array and I have to map to extract each name for the fetch:
   const promises = names.map((name) =>
     fetch(
       `https://freerandomapi.cyclic.app/api/v1/desserts?category=${name}`
-    ).then((r) => r.json())
+    ).then((r) => r.json()) // convert to json
   );
 
-  const desserts = await Promise.all(promises);
+  const desserts = await Promise.all(promises); // storing returned data from all the fetches - 3 categories - in a variable
+  
+  console.log(exampleSort(desserts.map((dessert) => dessert.data).flat()));
+
+  console.log(reverseSort(desserts.map((dessert) => dessert.data).flat()));
+ 
   return desserts.map((dessert) => dessert.data).flat();
 };
 
+  
+  
+
+
+// ROOT-LEVEL AWAIT & GLOBAL VARIABLE - it must be an await in order to work with the async function:
 const desserts = await myData([
   "Cookie&limit=10",
   "Donut&limit=10",
   "Ice_Cream&limit=10",
 ]);
 
-// console.log(desserts);
-// console.log(desserts[0].name);
-// console.log(desserts[0].category);
-// console.log(desserts[0].photoUrl);
-// console.log(desserts[0].description);
-
-// add favorite key:value pair to data set to false
-// then sort function
 
 
-// Creating Dessert Cards:
-const createDessertCards = ({ name, category, photoUrl}) => {
+
+
+
+// CREATING DESSERT CARDS:
+const createDessertCards = ({_id, name, category, photoUrl}) => {
   const dessertCard = document.createElement("div");
 
+  dessertCard.setAttribute('id', _id);
   dessertCard.classList.add("dessert-card");
   dessertCard.setAttribute(`data-item`, category);
   dessertCard.setAttribute(`data-open`, name);
@@ -45,16 +73,17 @@ const createDessertCards = ({ name, category, photoUrl}) => {
 		
 	</div>
 `;
-  // console.log(dessertCard);
+
   document.querySelector(".desserts-grid").appendChild(dessertCard);
 };
 
-// desserts.forEach((card) => {
-//   createDessertCards(card);
-// });
 
-// Creating Dessert Cards Modals:
-const createModalDesserts = ({name, photoUrl, description}) => {
+
+
+
+
+// CREATE DESSERT CARD MODALS:
+const createModalDesserts = ({_id, name, photoUrl, description}) => {
   
   const modalDessert = document.createElement("div");
   modalDessert.setAttribute('id', name);
@@ -78,7 +107,7 @@ const createModalDesserts = ({name, photoUrl, description}) => {
       </div>
 
       <div class="modal-container-btn">
-        <button class="btn btn-primary square-btn">Add To My Favorites</button>
+        <button id="${_id}" class="btn btn-primary square-btn">Add To My Favorites</button>
       </div>
       
     </div>    
@@ -86,6 +115,10 @@ const createModalDesserts = ({name, photoUrl, description}) => {
   console.log(modalDessert);
   document.querySelector(".site-wrapper").appendChild(modalDessert);
 };
+
+
+
+
 
 const createAllCards = (allDesserts) => {
   allDesserts.forEach((card) => {
@@ -96,15 +129,16 @@ const createAllCards = (allDesserts) => {
 
 createAllCards(desserts);
 
+
+
+
+
 // DESSERT TOTALS COUNT BOX 
 const cookieFilter = desserts.filter(dessert => dessert.category === "Cookie").length;
-console.log(cookieFilter);
 
 const donutFilter = desserts.filter(dessert => dessert.category === "Donut").length;
-console.log(donutFilter);
 
 const iceCreamFilter = desserts.filter(dessert => dessert.category === "Ice_Cream").length;
-console.log(iceCreamFilter);
 
 const dessertDataCounts = (cookie, donut, iceCream) => {
   const dataCounts = document.createElement("div");
@@ -129,6 +163,11 @@ const dessertDataCounts = (cookie, donut, iceCream) => {
 dessertDataCounts(cookieFilter, donutFilter, iceCreamFilter);
 
 
+
+const root = document.documentElement;
+
+
+
 // Setting Light-Dark Theme 
 const theme = 'theme';
 const dataTheme = 'data-theme';
@@ -139,16 +178,6 @@ const light = 'light';
 const open = 'open';
 const active = 'active';
 
-//Attributes Applied To The Elements that will Trigger the Modal Open/Close
-const modalOpen = '[data-open]';
-const modalClose = '[data-close]';
-const isVisible = 'is-visible';
-
-//Dessert Cards Filter
-const dataFilter = '[data-filter]';
-const dessertData = '[data-item]';
-
-const root = document.documentElement;
 
 // THEME - LIGHT/DARK JS:
 const toggleTheme = document.querySelector(themeTab);
@@ -205,9 +234,18 @@ for (const elm of switcher) {
 	})
 };
 
+
+
+
+//Attributes Applied To The Elements that will Trigger the Modal Open/Close
+const modalOpen = '[data-open]'; // on dessert card - name of dessert
+const modalClose = '[data-close]'; //on modal itself - icon
+const isVisible = 'is-visible'; // on modal itself
+
+
 // MODALS
-const openModal = document.querySelectorAll(modalOpen);
-const closeModal = document.querySelectorAll(modalClose);
+const openModal = document.querySelectorAll(modalOpen); // node list of all the data-opens
+const closeModal = document.querySelectorAll(modalClose); // node list of all the data-closes
 
 for(const elm of openModal) {
   elm.addEventListener('click', function() {
@@ -232,10 +270,17 @@ document.addEventListener('keyup', (e) => {
   document.querySelector('.modal.is-visible').classList.remove(isVisible);
 });
 
-// Data Filters
-const filterLink = document.querySelectorAll(dataFilter);
-const dessertItems = document.querySelectorAll(dessertData);
 
+
+
+
+//Dessert Cards Filter
+const dataFilter = '[data-filter]'; // On Nav li item
+const dessertData = '[data-item]'; // On dessert card itself = category
+
+// Data Filters
+const filterLink = document.querySelectorAll(dataFilter); //on li item data-filter cookie, donut, ice cream
+const dessertItems = document.querySelectorAll(dessertData);// on dessert card data item category
 
 for (const link of filterLink) {
   link.addEventListener('click', function () {
@@ -255,13 +300,41 @@ for (const link of filterLink) {
   })
 };
 
-// ADD - REMOVE FROM FAVORITES
-// get favorites from empty array
-const favorites = [];
+//  SORT ALPHA AND REVERSE ALPHA
+const dessertDataNames = '[data-open]'; // on dessert card itself = name
+const dessertNames = document.querySelectorAll(dessertDataNames); // node list of all dessert cards by their dessert names
 
-//add class 'fav' to each favorite
-favorites.forEach(function(favorite) {
-  document.getElementById(favorite).className = 'fave';
+
+
+
+
+
+/// FAVORITES FULL-PAGE MODAL
+const openFavoritesModal = document.querySelector('.favorites-link-open');
+
+const $modal = document.getElementById('favorites');
+
+const closeFavoritesModal = document.querySelector('.favorites-link-closed');
+
+openFavoritesModal.addEventListener('click', () => {
+  $modal.classList.remove('hidden');
 });
+
+closeFavoritesModal.addEventListener('click', () => {
+  $modal.classList.add('hidden');
+});
+ 
+
+
+// MOVE FAVORITES FROM MAIN PAGE TO FAVORITES MODAL
+
+// get a reference to the list of dessert cards:
+const cardsList = document.getElementsByClassName('square-btn'); // array of elements of all my buttons on modals
+
+cardsList.forEach((card) => {
+  card.addEventListener('click', )
+})
+// write two functions: 1. Remove/Add HTML from the DOM, use append 2. Splice from Desserts array and add to Favorites Array from the fetch data array 3. invoke both of these functions inside de add Event Listener function. 4. Ask Mike: how to access info outside async function
+
 
 

@@ -56,8 +56,8 @@
           <li data-filter="Donut" class="filter-link btn-alt">DONUTS</li>
           <li data-filter="Ice_Cream" class="filter-link btn-alt">ICE CREAM</li>
           <li data-filter="alpha" class="filter-link btn-alt">A - Z</li>
-          <li data-filter="reverseAlpha" class="filter-link btn-alt">Z - A</li>
-          <li class="btn-alt favorites-link" data-open="favorites">MY FAVORITES</li>
+          <li data-filter="reverse" class="filter-link btn-alt">Z - A</li>
+          <li class="btn-alt favorites-link-open">MY FAVORITES</li>
         </ul>
       </nav>
 
@@ -72,7 +72,7 @@
       </section>
 
       <!-- FULL PAGE FAVORITES MODAL -->
-      <section id="favorites" class="favorites-full-modal container is-visible" data-animation="slideInOutTop">
+      <section id="favorites" class="favorites-full-modal hidden container">
 
         <div class="header-div">
 
@@ -97,11 +97,15 @@
             <li data-filter="Cookie" class="filter-link btn-alt" active">COOKIES</li>
             <li data-filter="Donut" class="filter-link btn-alt">DONUTS</li>
             <li data-filter="Ice_Cream" class="filter-link btn-alt">ICE CREAM</li>
-            <li data-filter="alpha" class="filter-link btn-alt">A - Z</li>
-            <li data-filter="reverseAlpha" class="filter-link btn-alt">Z - A</li>
-            <li class="btn-alt">BACK TO ALL DESSERTS</li>
+            <li id="alpha" class="btn-alt">A - Z</li>
+            <li id="reverseAlpha" class="btn-alt">Z - A</li>
+            <li role='button' class="btn-alt favorites-link-closed">BACK TO ALL DESSERTS</li>
           </ul>
         </nav>
+
+      <div class="fav-container container">
+
+      </div>
 
       </section>
       
