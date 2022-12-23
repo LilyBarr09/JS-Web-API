@@ -1,5 +1,6 @@
 const favoriteDesserts = [];
 
+
 //  SORT DATA FUNCTION
 const exampleSort = (data) => {
   return data.sort(function(a, b){
@@ -14,7 +15,7 @@ const reverseSort = (data) => {
     if(a.name < b.name) {return 1};
     if(a.name > b.name) {return -1};
     return 0;
-  })
+  });
 };
 
 
@@ -282,30 +283,43 @@ const dessertData = '[data-item]'; // On dessert card itself = category
 const filterLink = document.querySelectorAll(dataFilter); //on li item data-filter cookie, donut, ice cream
 const dessertItems = document.querySelectorAll(dessertData);// on dessert card data item category
 
-for (const link of filterLink) {
-  link.addEventListener('click', function () {
-    setActive(link, '.filter-link');
-    const filter = this.dataset.filter;
-    dessertItems.forEach((card) => {
-      if(filter === 'all') {
-        card.style.display = 'flex';
-      }
-      else if (card.dataset.item === filter) {
-        card.style.display = 'flex';
-      }
-      else {
-        card.style.display = 'none';
-      }
+const filterCards = () => {
+  for (const link of filterLink) {
+    link.addEventListener('click', function () {
+      setActive(link, '.filter-link');
+      const filter = this.dataset.filter;
+      dessertItems.forEach((card) => {
+        if(filter === 'all') {
+          card.style.display = 'flex';
+        }
+        else if (card.dataset.item === filter) {
+          card.style.display = 'flex';
+        }
+        else {
+          card.style.display = 'none';
+        }
+      })
     })
-  })
-};
+  };
+}
+filterCards();
 
 //  SORT ALPHA AND REVERSE ALPHA
-const dessertDataNames = '[data-open]'; // on dessert card itself = name
-const dessertNames = document.querySelectorAll(dessertDataNames); // node list of all dessert cards by their dessert names
+const dessertGrid = document.querySelector(".desserts-grid");
+const sortAlphaLink = document.querySelector(".alpha");
+const sortReverseLink = document.querySelector(".reverse-alpha");
 
+sortAlphaLink.addEventListener('click', () => {
+  dessertGrid.innerHTML = "";
+  const sorted = exampleSort(desserts);
+  createAllCards(sorted);
+});
 
-
+sortReverseLink.addEventListener('click', () => {
+  dessertGrid.innerHTML = "";
+  const reverseSorted = reverseSort(desserts);
+  createAllCards(reverseSorted);
+});
 
 
 
@@ -331,9 +345,9 @@ closeFavoritesModal.addEventListener('click', () => {
 // get a reference to the list of dessert cards:
 const cardsList = document.getElementsByClassName('square-btn'); // array of elements of all my buttons on modals
 
-cardsList.forEach((card) => {
-  card.addEventListener('click', )
-})
+// cardsList.forEach((card) => {
+//   card.addEventListener('click', )
+// })
 // write two functions: 1. Remove/Add HTML from the DOM, use append 2. Splice from Desserts array and add to Favorites Array from the fetch data array 3. invoke both of these functions inside de add Event Listener function. 4. Ask Mike: how to access info outside async function
 
 
