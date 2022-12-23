@@ -1,6 +1,5 @@
 const favoriteDesserts = [];
 
-
 //  SORT DATA FUNCTION
 const exampleSort = (data) => {
   return data.sort(function(a, b){
@@ -17,7 +16,6 @@ const reverseSort = (data) => {
     return 0;
   });
 };
-
 
 
 // FETCH DATA:
@@ -39,18 +37,12 @@ const myData = async (names) => {
 };
 
   
-  
-
-
 // ROOT-LEVEL AWAIT & GLOBAL VARIABLE - it must be an await in order to work with the async function:
 const desserts = await myData([
   "Cookie&limit=10",
   "Donut&limit=10",
   "Ice_Cream&limit=10",
 ]);
-
-
-
 
 
 
@@ -77,9 +69,6 @@ const createDessertCards = ({_id, name, category, photoUrl}) => {
 
   document.querySelector(".desserts-grid").appendChild(dessertCard);
 };
-
-
-
 
 
 
@@ -119,8 +108,6 @@ const createModalDesserts = ({_id, name, photoUrl, description}) => {
 
 
 
-
-
 const createAllCards = (allDesserts) => {
   allDesserts.forEach((card) => {
   createDessertCards(card);
@@ -129,7 +116,6 @@ const createAllCards = (allDesserts) => {
 };
 
 createAllCards(desserts);
-
 
 
 
@@ -237,7 +223,6 @@ for (const elm of switcher) {
 
 
 
-
 //Attributes Applied To The Elements that will Trigger the Modal Open/Close
 const modalOpen = '[data-open]'; // on dessert card - name of dessert
 const modalClose = '[data-close]'; //on modal itself - icon
@@ -279,11 +264,13 @@ document.addEventListener('keyup', (e) => {
 const dataFilter = '[data-filter]'; // On Nav li item
 const dessertData = '[data-item]'; // On dessert card itself = category
 
-// Data Filters
-const filterLink = document.querySelectorAll(dataFilter); //on li item data-filter cookie, donut, ice cream
-const dessertItems = document.querySelectorAll(dessertData);// on dessert card data item category
+
+
 
 const filterCards = () => {
+  // Data Filters
+  const filterLink = document.querySelectorAll(dataFilter); //on li item data-filter cookie, donut, ice cream
+  const dessertItems = document.querySelectorAll(dessertData);// on dessert card data item category
   for (const link of filterLink) {
     link.addEventListener('click', function () {
       setActive(link, '.filter-link');
@@ -313,12 +300,14 @@ sortAlphaLink.addEventListener('click', () => {
   dessertGrid.innerHTML = "";
   const sorted = exampleSort(desserts);
   createAllCards(sorted);
+  filterCards();
 });
 
 sortReverseLink.addEventListener('click', () => {
   dessertGrid.innerHTML = "";
   const reverseSorted = reverseSort(desserts);
   createAllCards(reverseSorted);
+  filterCards();
 });
 
 
@@ -341,6 +330,12 @@ closeFavoritesModal.addEventListener('click', () => {
 
 
 // MOVE FAVORITES FROM MAIN PAGE TO FAVORITES MODAL
+const moveToFavorites = () => {
+  desserts.splice()
+}
+
+
+
 
 // get a reference to the list of dessert cards:
 const cardsList = document.getElementsByClassName('square-btn'); // array of elements of all my buttons on modals
