@@ -108,7 +108,7 @@ const createModalDesserts = ({_id, name, photoUrl, description, favorite}) => {
       
     </div>    
   `;
-  console.log(modalDessert);
+  // console.log(modalDessert);
 
   if(favorite) {
     document.querySelector('.favorites-full-modal').append(modalDessert);
@@ -338,43 +338,47 @@ closeFavoritesModal.addEventListener('click', () => {
 
 // MOVE FAVORITES FROM MAIN PAGE TO FAVORITES MODAL
 const cardsList = document.querySelectorAll('.square-btn'); // array of elements of all my buttons on modals
-console.log(cardsList);
 const favoritesGrid = document.querySelector("favorites");
 
-const addEventListenerToDessertCards = () => {
+const addToFavoritesEventListener = () => {
   cardsList.forEach((card) => {
     card.addEventListener('click', () => {
       addFavoriteDessert(card.dataset.id); // getting button id
-      removeFavoriteDessert(card.dataset.id);
-  
+     });
+  })
+};
+addToFavoritesEventListener();
+
+const removeFromFavoritesEventListener = () => {
+  cardsList.forEach((card) => {
+    card.addEventListener('click', () => {
+      removeFavoriteDessert(card.dataset.id); // getting button id
     });
   })
 };
-addEventListenerToDessertCards();
-
-
-
+removeFromFavoritesEventListener();
 
 // 1. Change value from Favorite-true to Favorite-false 
 const addFavoriteDessert = (chosenDessert) => {
   desserts.map(dessert => {
     if(chosenDessert === dessert._id) {
-      dessert.favorite = true;
+        dessert.favorite = true;
+        console.log(dessert);
       const item = document.getElementById(dessert._id); //grab entire dessert card
       item.remove();
       createDessertCards(dessert, true);
       createModalDesserts(dessert);
       activateModals();
       const favs = document.getElementById('favorites');// grab favorites modal
-      // favs.innerHTML = "";
       favs.appendChild(item);
-      console.log(dessert);
+    
+      return dessert;
     }
    });
 
   return chosenDessert;
 };
-console.log(addFavoriteDessert({desserts}));
+addFavoriteDessert(desserts);
 
 
 //envoke this function in addFavoriteDessert function
@@ -387,8 +391,7 @@ const removeFavoriteDessert = (notChosenDessert) => {
       createDessertCards(dessert, true);
       createModalDesserts(dessert);
       activateModals();
-      const dessertGrid = document.getElementsByClassName('desserts-grid');
-      // dessertGrid.innerHTML = "";
+      const dessertGrid = document.querySelector('.desserts-grid');
       dessertGrid.appendChild(item);
       
     }
@@ -396,7 +399,7 @@ const removeFavoriteDessert = (notChosenDessert) => {
 
   return notChosenDessert;
 };
-console.log(removeFavoriteDessert({desserts}));
+removeFavoriteDessert(desserts);
 
 // keep these for sorting Favorites and Main page
 const getNonFavorites = () => desserts.filter(dessert => dessert.favorite === false);
