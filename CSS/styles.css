@@ -286,7 +286,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background: var(--bg);
+	background: var(--bg2);
 	cursor: pointer;
 	position: fixed;
 	top: 0;
