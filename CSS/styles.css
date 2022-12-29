@@ -287,6 +287,7 @@
 	justify-content: center;
 	align-items: center;
 	background: var(--bg2);
+	height: auto;
 	cursor: pointer;
 	position: fixed;
 	top: 0;

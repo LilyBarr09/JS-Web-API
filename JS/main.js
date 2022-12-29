@@ -317,11 +317,11 @@ sortReverseLink.addEventListener('click', () => {
 
 
 /// FAVORITES FULL-PAGE MODAL
-const openFavoritesModal = document.querySelector('.favorites-link-open');
+const openFavoritesModal = document.querySelector('.favorites-link-open'); //nav bar link
 
-const $modal = document.getElementById('favorites');
+const $modal = document.getElementById('favorites');// favorites modal
 
-const closeFavoritesModal = document.querySelector('.favorites-link-closed');
+const closeFavoritesModal = document.querySelector('.favorites-link-closed');//nav bar link
 
 openFavoritesModal.addEventListener('click', () => {
   $modal.classList.remove('hidden');
@@ -344,31 +344,25 @@ const addToFavoritesEventListener = () => {
   cardsList.forEach((card) => {
     card.addEventListener('click', () => {
       addFavoriteDessert(card.dataset.id); // getting button id
+      removeFavoriteDessert(desserts);
      });
   })
 };
 addToFavoritesEventListener();
 
-const removeFromFavoritesEventListener = () => {
-  cardsList.forEach((card) => {
-    card.addEventListener('click', () => {
-      removeFavoriteDessert(card.dataset.id); // getting button id
-    });
-  })
-};
-removeFromFavoritesEventListener();
 
-// 1. Change value from Favorite-true to Favorite-false 
 const addFavoriteDessert = (chosenDessert) => {
-  desserts.map(dessert => {
+  desserts.forEach((dessert) => {
     if(chosenDessert === dessert._id) {
-        dessert.favorite = true;
-        console.log(dessert);
       const item = document.getElementById(dessert._id); //grab entire dessert card
       item.remove();
+      const modalItem = document.getElementById(dessert.name);//grab modal by id-name
+      modalItem.remove();
+       dessert.favorite = true;
+       console.log(dessert.favorite);
       createDessertCards(dessert, true);
       createModalDesserts(dessert);
-      activateModals();
+      activateModals(); // event listener for dessert modals
       const favs = document.getElementById('favorites');// grab favorites modal
       favs.appendChild(item);
     
@@ -378,17 +372,18 @@ const addFavoriteDessert = (chosenDessert) => {
 
   return chosenDessert;
 };
-addFavoriteDessert(desserts);
 
-
-//envoke this function in addFavoriteDessert function
+//call this function in event listener
 const removeFavoriteDessert = (notChosenDessert) => {
-  desserts.map(dessert => {
+  desserts.forEach((dessert) => {
     if(notChosenDessert === dessert._id) {
-      dessert.favorite = false;
-      const item = document.getElementById(dessert._id);
+      const item = document.getElementById(dessert._id);// grab dessert card
       item.remove();
-      createDessertCards(dessert, true);
+      const modalItem = document.getElementById(dessert.name);// grab dessert modal 
+      modalItem.remove();
+      dessert.favorite = false;
+      console.log(dessert.favorite);
+      createDessertCards(dessert, false);
       createModalDesserts(dessert);
       activateModals();
       const dessertGrid = document.querySelector('.desserts-grid');
@@ -399,9 +394,9 @@ const removeFavoriteDessert = (notChosenDessert) => {
 
   return notChosenDessert;
 };
-removeFavoriteDessert(desserts);
 
-// keep these for sorting Favorites and Main page
+
+// keep these for sorting Favorites
 const getNonFavorites = () => desserts.filter(dessert => dessert.favorite === false);
 console.log(getNonFavorites(desserts));
 
