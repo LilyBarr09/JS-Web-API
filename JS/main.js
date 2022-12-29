@@ -1,3 +1,5 @@
+
+const root = document.documentElement;
 const favoriteDesserts = [];
 
 //  SORT DATA FUNCTION
@@ -17,7 +19,6 @@ const reverseSort = (data) => {
   });
 };
 
-
 // FETCH DATA:
 const myData = async (names) => {
   // desserts is an array and I have to map to extract each name for the fetch:
@@ -29,13 +30,17 @@ const myData = async (names) => {
 
   const desserts = await Promise.all(promises); // storing returned data from all the fetches - 3 categories - in a variable
   
-  console.log(exampleSort(desserts.map((dessert) => dessert.data).flat()));
+  exampleSort(desserts.map((dessert) => dessert.data).flat());
 
-  console.log(reverseSort(desserts.map((dessert) => dessert.data).flat()));
- 
-  return desserts.map((dessert) => dessert.data).flat();
+  reverseSort(desserts.map((dessert) => dessert.data).flat());
+  
+  const addFav = desserts.map((dessert) => dessert.data).flat().map((dessert) => {
+    return {...dessert, favorite: false};
+  });
+  console.log(addFav);
+  return addFav;
+
 };
-
   
 // ROOT-LEVEL AWAIT & GLOBAL VARIABLE - it must be an await in order to work with the async function:
 const desserts = await myData([
@@ -44,10 +49,8 @@ const desserts = await myData([
   "Ice_Cream&limit=10",
 ]);
 
-
-
 // CREATING DESSERT CARDS:
-const createDessertCards = ({_id, name, category, photoUrl}) => {
+const createDessertCards = ({_id, name, category, photoUrl, fave}) => {
   const dessertCard = document.createElement("div");
 
   dessertCard.setAttribute('id', _id);
@@ -66,14 +69,16 @@ const createDessertCards = ({_id, name, category, photoUrl}) => {
 		
 	</div>
 `;
-
-  document.querySelector(".desserts-grid").appendChild(dessertCard);
+if(fave) {
+  document.querySelector('.fav-container').append(dessertCard);
+} else {
+  document.querySelector(".desserts-grid").append(dessertCard);
+}
+  
 };
 
-
-
 // CREATE DESSERT CARD MODALS:
-const createModalDesserts = ({_id, name, photoUrl, description}) => {
+const createModalDesserts = ({_id, name, photoUrl, description, favorite}) => {
   
   const modalDessert = document.createElement("div");
   modalDessert.setAttribute('id', name);
@@ -97,27 +102,30 @@ const createModalDesserts = ({_id, name, photoUrl, description}) => {
       </div>
 
       <div class="modal-container-btn">
-        <button id="${_id}" class="btn btn-primary square-btn">Add To My Favorites</button>
+        <button data-id="${_id}" class="btn btn-primary square-btn">${!favorite ? 'Add To My Favorites' : 'Remove from Favorites'}</button>
+       
       </div>
       
     </div>    
   `;
   console.log(modalDessert);
-  document.querySelector(".site-wrapper").appendChild(modalDessert);
+
+  if(favorite) {
+    document.querySelector('.favorites-full-modal').append(modalDessert);
+  } else {
+    document.querySelector(".site-wrapper").append(modalDessert);
+  }
+  
 };
-
-
 
 const createAllCards = (allDesserts) => {
   allDesserts.forEach((card) => {
-  createDessertCards(card);
+  createDessertCards(card, false); //false because it's not yet a favorite
   createModalDesserts(card);
 });
 };
 
 createAllCards(desserts);
-
-
 
 
 // DESSERT TOTALS COUNT BOX 
@@ -144,14 +152,10 @@ const dessertDataCounts = (cookie, donut, iceCream) => {
    
   `;
   console.log(dataCounts);
-  document.querySelector(".dessert-count").appendChild(dataCounts);
+  document.querySelector(".dessert-count").append(dataCounts);
 
 };
 dessertDataCounts(cookieFilter, donutFilter, iceCreamFilter);
-
-
-
-const root = document.documentElement;
 
 
 
@@ -230,42 +234,42 @@ const isVisible = 'is-visible'; // on modal itself
 
 
 // MODALS
-const openModal = document.querySelectorAll(modalOpen); // node list of all the data-opens
-const closeModal = document.querySelectorAll(modalClose); // node list of all the data-closes
 
-for(const elm of openModal) {
-  elm.addEventListener('click', function() {
-    const modalId = this.dataset.open;
-    document.getElementById(modalId).classList.add(isVisible);
-  })
+const activateModals = () => {
+  const openModal = document.querySelectorAll(modalOpen); // node list of all the data-opens
+  const closeModal = document.querySelectorAll(modalClose); // node list of all the data-closes
+  
+  for(const elm of openModal) {
+    elm.addEventListener('click', function() {
+      const modalId = this.dataset.open;
+      document.getElementById(modalId).classList.add(isVisible);
+    })
+  };
+  
+  for(const elm of closeModal) {
+    elm.addEventListener('click', function() {
+      this.parentElement.parentElement.parentElement.classList.remove(isVisible);
+    })
+  };
+  
+  document.addEventListener('click', (e) => {
+   if(e.target === document.querySelector('.modal.is-visible'))
+   document.querySelector('.modal.is-visible').classList.remove(isVisible);
+  });
+  
+  document.addEventListener('keyup', (e) => {
+    if(e.key === 'Escape')
+    document.querySelector('.modal.is-visible').classList.remove(isVisible);
+  });
 };
 
-for(const elm of closeModal) {
-  elm.addEventListener('click', function() {
-    this.parentElement.parentElement.parentElement.classList.remove(isVisible);
-  })
-};
-
-document.addEventListener('click', (e) => {
- if(e.target === document.querySelector('.modal.is-visible'))
- document.querySelector('.modal.is-visible').classList.remove(isVisible);
-});
-
-document.addEventListener('keyup', (e) => {
-  if(e.key === 'Escape')
-  document.querySelector('.modal.is-visible').classList.remove(isVisible);
-});
-
-
+activateModals();
 
 
 
 //Dessert Cards Filter
 const dataFilter = '[data-filter]'; // On Nav li item
 const dessertData = '[data-item]'; // On dessert card itself = category
-
-
-
 
 const filterCards = () => {
   // Data Filters
@@ -298,14 +302,14 @@ const sortReverseLink = document.querySelector(".reverse-alpha");
 
 sortAlphaLink.addEventListener('click', () => {
   dessertGrid.innerHTML = "";
-  const sorted = exampleSort(desserts);
+  const sorted = exampleSort(desserts);// not desserts but filtered (fav-false)
   createAllCards(sorted);
   filterCards();
 });
 
 sortReverseLink.addEventListener('click', () => {
   dessertGrid.innerHTML = "";
-  const reverseSorted = reverseSort(desserts);
+  const reverseSorted = reverseSort(desserts);// not desserts but filtered (fav-false)
   createAllCards(reverseSorted);
   filterCards();
 });
@@ -329,28 +333,74 @@ closeFavoritesModal.addEventListener('click', () => {
  
 
 
+
+
+
 // MOVE FAVORITES FROM MAIN PAGE TO FAVORITES MODAL
-// write two functions: 1. Remove/Add HTML from the DOM, use append 2. Splice from Desserts array and add to Favorites Array from the fetch data array 3. invoke both of these functions inside de add Event Listener function. 4. Ask Mike: how to access info outside async function
+const cardsList = document.querySelectorAll('.square-btn'); // array of elements of all my buttons on modals
+console.log(cardsList);
+const favoritesGrid = document.querySelector("favorites");
 
-// get a reference to the list of dessert cards:
-const cardsList = document.getElementsByClassName('square-btn'); // array of elements of all my buttons on modals
-
-const moveToFavorites = () => {
-  favoriteDesserts = desserts.splice(0);
-  return favoriteDesserts;
+const addEventListenerToDessertCards = () => {
+  cardsList.forEach((card) => {
+    card.addEventListener('click', () => {
+      addFavoriteDessert(card.dataset.id); // getting button id
+  
+    });
+  })
 };
+addEventListenerToDessertCards();
 
-const moveBackToMain = () => {
-  desserts = favoriteDesserts.splice(0);
-  return desserts;
+
+
+
+// 1. Change value from Favorite-true to Favorite-false 
+const addFavoriteDessert = (chosenDessert) => {
+  desserts.forEach(dessert => {
+    if(chosenDessert === dessert._id) {
+      const item = document.getElementById(dessert._id); //grab entire dessert card
+      item.remove();
+      dessert.favorite = true;
+      createDessertCards(dessert, true);
+      createModalDesserts(dessert);
+      activateModals();
+      // const favs = document.getElementById('favorites');// grab favorites modal
+      // favs.appendChild(item);
+     
+    }
+   });
+
+  return chosenDessert;
 };
+console.log(addFavoriteDessert({desserts}));
 
-cardsList.addEventListener('click', () => {
-  desserts.forEach((card) => {
-      moveToFavorites();
-    })
-    document.querySelector(".fav-container").appendChild(".dessert-card");
+
+//envoke this function in addFavoriteDessert function
+const removeFavoriteDessert = (notChosenDessert) => {
+  desserts.forEach(dessert => {
+    if(notChosenDessert === dessert._id) {
+      
+      const item = document.getElementById(dessert._id);
+      const dessertGrid = document.getElementsByClassName('desserts-grid');
+      dessertGrid.appendChild(item);
+      dessert.favorite = false;
+    }
   });
+
+  return notChosenDessert;
+};
+console.log(removeFavoriteDessert({desserts}));
+
+// keep these for sorting Favorites and Main page
+const getNonFavorites = () => desserts.filter(dessert => dessert.favorite === false);
+console.log(getNonFavorites(desserts));
+
+const getFavorites = () => desserts.filter(dessert => dessert.favorite === true);
+console.log(getFavorites(desserts));
+
+
+
+
 
 
 

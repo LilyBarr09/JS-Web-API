@@ -307,6 +307,7 @@
 .fav-container {
 	display: flex;
 	justify-content: center;
+	overflow: auto;
 	
 }
 .dessert-count {
