@@ -26,15 +26,14 @@ const reverseSort = (data) => {
 
 // FETCH DATA:
 const myData = async (names) => {
-  // desserts is an array and I have to map to extract each name for the fetch:
   const promises = names.map(
     (name) =>
       fetch(
         `https://freerandomapi.cyclic.app/api/v1/desserts?category=${name}`
-      ).then((r) => r.json()) // convert to json
+      ).then((r) => r.json())
   );
 
-  const desserts = await Promise.all(promises); // storing returned data from all the fetches - 3 categories - in a variable
+  const desserts = await Promise.all(promises); 
 
   const addFav = desserts
     .map((dessert) => dessert.data)
@@ -42,11 +41,10 @@ const myData = async (names) => {
     .map((dessert) => {
       return { ...dessert, favorite: false };
     });
-  console.log(addFav);
   return addFav;
 };
 
-// ROOT-LEVEL AWAIT & GLOBAL VARIABLE - it must be an await in order to work with the async function:
+// ROOT-LEVEL AWAIT & GLOBAL VARIABLE
 const desserts = await myData([
   "Cookie&limit=10",
   "Donut&limit=10",
@@ -128,7 +126,7 @@ const createModalDesserts = ({
 
 const createAllCards = (allDesserts, favorite) => {
   allDesserts.forEach((card) => {
-    createDessertCards(card, favorite); //false because it's not yet a favorite
+    createDessertCards(card, favorite); 
     createModalDesserts(card);
   });
 };
@@ -164,7 +162,6 @@ const dessertDataCounts = (cookie, donut, iceCream) => {
     </div>
    
   `;
-  console.log(dataCounts);
   document.querySelector(".dessert-count").append(dataCounts);
 };
 dessertDataCounts(cookieFilter, donutFilter, iceCreamFilter);
@@ -217,7 +214,7 @@ if (currentTheme === dark) {
 toggleTheme.addEventListener("click", function () {
   const tab = this.parentElement.parentElement;
   if (!tab.className.includes(open)) {
-    tab.classList.add(open); // open is our css class we're including
+    tab.classList.add(open); 
   } else {
     tab.classList.remove(open);
   }
@@ -232,15 +229,15 @@ for (const elm of switcher) {
 }
 
 //Attributes Applied To The Elements that will Trigger the Modal Open/Close
-const modalOpen = "[data-open]"; // on dessert card - name of dessert
-const modalClose = "[data-close]"; //on modal itself - icon
-const isVisible = "is-visible"; // on modal itself
+const modalOpen = "[data-open]"; 
+const modalClose = "[data-close]";
+const isVisible = "is-visible"; 
 
 // MODALS
 
 const activateModals = () => {
-  const openModal = document.querySelectorAll(modalOpen); // node list of all the data-opens
-  const closeModal = document.querySelectorAll(modalClose); // node list of all the data-closes
+  const openModal = document.querySelectorAll(modalOpen); 
+  const closeModal = document.querySelectorAll(modalClose); 
 
   for (const elm of openModal) {
     elm.addEventListener("click", function () {
@@ -271,13 +268,13 @@ const activateModals = () => {
 activateModals();
 
 //Dessert Cards Filter
-const dataFilter = "[data-filter]"; // On Nav li item
-const dessertData = "[data-item]"; // On dessert card itself = category
+const dataFilter = "[data-filter]"; 
+const dessertData = "[data-item]";
 
 const filterCards = () => {
   // Data Filters
-  const filterLink = document.querySelectorAll(dataFilter); //on li item data-filter cookie, donut, ice cream
-  const dessertItems = document.querySelectorAll(dessertData); // on dessert card data item category
+  const filterLink = document.querySelectorAll(dataFilter); 
+  const dessertItems = document.querySelectorAll(dessertData); 
   for (const link of filterLink) {
     link.addEventListener("click", function () {
       setActive(link, ".filter-link");
@@ -305,14 +302,14 @@ const sortReverseLink = document.querySelector(".reverse-alpha");
 
 sortAlphaLink.addEventListener("click", () => {
   dessertGrid.innerHTML = "";
-  const sorted = exampleSort(desserts, false); // not desserts but filtered (fav-false)
+  const sorted = exampleSort(desserts, false); 
   createAllCards(sorted, false);
   filterCards();
 });
 
 sortReverseLink.addEventListener("click", () => {
   dessertGrid.innerHTML = "";
-  const reverseSorted = reverseSort(desserts, false); // not desserts but filtered (fav-false)
+  const reverseSorted = reverseSort(desserts, false); 
   createAllCards(reverseSorted, false);
   filterCards();
 });
@@ -324,8 +321,7 @@ const sortReverseFave = document.getElementById("reverseAlpha-faves");
 
 sortAlphaFave.addEventListener("click", () => {
   const trueResults = desserts.filter((el) => el.favorite === true);
-  console.log(trueResults);
-  const sorted = exampleSort(trueResults); // not desserts but filtered (fav-true)
+  const sorted = exampleSort(trueResults);
   favoritesGrid.innerHTML = "";
   createAllCards(sorted, true);
   filterCards();
@@ -333,17 +329,16 @@ sortAlphaFave.addEventListener("click", () => {
 
 sortReverseFave.addEventListener("click", () => {
   const resultsTrue = desserts.filter((el) => el.favorite === true);
-  console.log(resultsTrue);
-  const reverseSorted = reverseSort(resultsTrue); // not desserts but filtered (fav-true)
+  const reverseSorted = reverseSort(resultsTrue); 
   favoritesGrid.innerHTML = "";
   createAllCards(reverseSorted, true);
   filterCards();
 });
 
 /// FAVORITES FULL-PAGE MODAL
-const openFavoritesModal = document.querySelector(".favorites-link-open"); //nav bar link
-const $modal = document.getElementById("favorites"); // favorites modal
-const closeFavoritesModal = document.querySelector(".favorites-link-closed"); //nav bar link
+const openFavoritesModal = document.querySelector(".favorites-link-open"); 
+const $modal = document.getElementById("favorites"); 
+const closeFavoritesModal = document.querySelector(".favorites-link-closed"); 
 
 openFavoritesModal.addEventListener("click", () => {
   $modal.classList.remove("hidden");
@@ -357,20 +352,14 @@ closeFavoritesModal.addEventListener("click", () => {
 const addFavoriteDessert = (chosenDessert) => {
   desserts.forEach((dessert) => {
     if (chosenDessert === dessert._id) {
-      const item = document.getElementById(dessert._id); //grab entire dessert card
+      const item = document.getElementById(dessert._id);
       item.remove();
-
-      const modalItem = document.getElementById(dessert.name); //grab modal by id-name
+      const modalItem = document.getElementById(dessert.name);
       modalItem.remove();
-
-      dessert.favorite = true; // change value
-      console.log(dessert.favorite);
-
-      createDessertCards(dessert, true); // create dessert card
-      createModalDesserts(dessert); // create modal
-
-      activateModals(); // event listener for dessert modals
-
+      dessert.favorite = true;
+      createDessertCards(dessert, true);
+      createModalDesserts(dessert);
+      activateModals();
       removeClickEvent(chosenDessert);
       return dessert;
     }
@@ -382,34 +371,30 @@ const addFavoriteDessert = (chosenDessert) => {
 const removeFavoriteDessert = (notChosenDessert) => {
   desserts.forEach((dessert) => {
     if (notChosenDessert === dessert._id) {
-      const item = document.getElementById(dessert._id); // grab dessert card
+      const item = document.getElementById(dessert._id); 
       item.remove();
-
-      const modalItem = document.getElementById(dessert.name); // grab dessert modal
+      const modalItem = document.getElementById(dessert.name);
       modalItem.remove();
-
-      dessert.favorite = false; // change value
-      console.log(dessert.favorite);
-
-      createDessertCards(dessert, false); //create dessert card
-      createModalDesserts(dessert); // create modal
-      activateModals(); // event listener for dessert modals
+      dessert.favorite = false;
+      createDessertCards(dessert, false);
+      createModalDesserts(dessert);
+      activateModals();
     }
   });
 
   return notChosenDessert;
 };
 
-const cardsList = document.querySelectorAll(".square-btn"); // array of elements of all my buttons on modals
+const cardsList = document.querySelectorAll(".square-btn"); 
 cardsList.forEach((card) => {
   card.addEventListener("click", () => {
-    addFavoriteDessert(card.dataset.id); // grabbing button id
+    addFavoriteDessert(card.dataset.id); 
   });
 });
 
 const removeClickEvent = (dessert_id) => {
   const modalButton = document.querySelector(`[data-id="${dessert_id}"]`);
   modalButton.addEventListener("click", () => {
-    removeFavoriteDessert(dessert_id); // grabbing button id
+    removeFavoriteDessert(dessert_id); 
   });
 };
