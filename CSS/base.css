@@ -11,14 +11,16 @@ nav {
 *,
 *::before,
 *::after {
-	box-sizing: border-box; /* content in a div to include margin and padding as its total size/width */
+	box-sizing: border-box;
+	/* content in a div to include margin and padding as its total size/width */
 }
 
 /* body defaults override browser defaults */
 body {
 	margin: 0;
 	font-family: "Inter", sans-serif;
-	font-size: 1rem; /* user can set their own font size, 1rem allows for users to do this */
+	font-size: 1rem;
+	/* user can set their own font size, 1rem allows for users to do this */
 	font-weight: 400;
 	line-height: 1.5;
 	color: var(--color-text);
@@ -28,8 +30,10 @@ body {
 
 /* anchor tags defaults */
 a {
-	color: #495fef; /*a lighter color for hyperlinks */
-	text-decoration: none; /* no underline */
+	color: #495fef;
+	/*a lighter color for hyperlinks */
+	text-decoration: none;
+	/* no underline */
 	background-color: transparent;
 }
 
@@ -45,19 +49,25 @@ h4 {
 }
 
 /* paragraph tags defaults */
-p {margin-top: 0;}
+p {
+	margin-top: 0;
+}
 
 /* Classes we'll use some Bootstrap 3rd-Party CSS Library */
 .container,
 .container-fluid {
 	width: 100%;
 	padding-left: 15px;
-	padding-right: 15px; /*px instead of rem, we don't want user settings to interfere with our layouts */
-	margin-left: auto; /* these auto margins will center our content */
+	padding-right: 15px;
+	/*px instead of rem, we don't want user settings to interfere with our layouts */
+	margin-left: auto;
+	/* these auto margins will center our content */
 	margin-right: auto;
 }
 
-.container {max-width: 1140px;}
+.container {
+	max-width: 1140px;
+}
 
 
 .ul-defaults-none {
