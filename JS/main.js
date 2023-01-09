@@ -304,6 +304,7 @@ sortAlphaLink.addEventListener("click", () => {
   dessertGrid.innerHTML = "";
   const sorted = exampleSort(desserts, false); 
   createAllCards(sorted, false);
+  activateModals();
   filterCards();
 });
 
@@ -311,6 +312,7 @@ sortReverseLink.addEventListener("click", () => {
   dessertGrid.innerHTML = "";
   const reverseSorted = reverseSort(desserts, false); 
   createAllCards(reverseSorted, false);
+  activateModals();
   filterCards();
 });
 
