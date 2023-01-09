@@ -324,6 +324,7 @@ sortAlphaFave.addEventListener("click", () => {
   const sorted = exampleSort(trueResults);
   favoritesGrid.innerHTML = "";
   createAllCards(sorted, true);
+  activateModals();
   filterCards();
 });
 
@@ -332,6 +333,7 @@ sortReverseFave.addEventListener("click", () => {
   const reverseSorted = reverseSort(resultsTrue); 
   favoritesGrid.innerHTML = "";
   createAllCards(reverseSorted, true);
+  activateModals();
   filterCards();
 });
 
